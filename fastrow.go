@@ -2,7 +2,6 @@ package fastrow
 
 import (
 	"database/sql"
-	"log"
 	"reflect"
 )
 
