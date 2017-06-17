@@ -5,11 +5,6 @@ import (
 	"reflect"
 )
 
-/*
-	func (v Value) Elem() - if v is a pointer or interface, it returns the value that v points to.
-	func (t Type) Elem() - returns the type data associated with t
-*/
-
 func Marshal(x interface{}, rows *sql.Rows) (interface{}, error) {
 	/* extract type information from x */
 	t := reflect.TypeOf(x)
