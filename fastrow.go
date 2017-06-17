@@ -23,11 +23,10 @@ func Marshal(x interface{}, rows *sql.Rows) (interface{}, error) {
 		cols, err := rows.Columns()
 
 		if err != nil {
-			/* FIXME -- return something meaningful later. */
-			return x, nil
+			return x, err
 		}
 
-		/* store column indexes for easy retrieval. */
+		/* store column indices for easy retrieval. */
 		for idx, col := range cols {
 			colmap[col] = idx
 		}
