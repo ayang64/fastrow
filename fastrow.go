@@ -14,7 +14,7 @@ func Marshal(x interface{}, rows *sql.Rows) (interface{}, error) {
 	/* extract type information from x */
 	t := reflect.TypeOf(x)
 
-	/* determine exactly the kind of symbol of t.  right now we only handle
+	/* determine exactly the kind of symbol t is.  right now we only handle
 	 * slices -- specifically slices of structs. */
 	switch t.Kind() {
 	case reflect.Slice:
