@@ -2,6 +2,7 @@ package fastrow
 
 import (
 	"database/sql"
+	"fmt"
 	"reflect"
 )
 
@@ -13,7 +14,7 @@ func Marshal(x interface{}, rows *sql.Rows) (interface{}, error) {
 	// determine exactly the kind of symbol t is.  right now we only handle
 	// slices -- specifically slices of structs. */
 
-	if t.Kind != reflect.Slice {
+	if t.Kind() != reflect.Slice {
 		return x, fmt.Errorf("Marshal requires a slice of structs.")
 	}
 
