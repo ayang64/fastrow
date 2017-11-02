@@ -6,7 +6,7 @@ import (
 	"reflect"
 )
 
-// Expects a slice of structs.
+// Marshal expects a slice of structs.
 func Marshal(x interface{}, rows *sql.Rows) (interface{}, error) {
 	// extract type information stored in x interface
 	t := reflect.TypeOf(x)
@@ -15,7 +15,7 @@ func Marshal(x interface{}, rows *sql.Rows) (interface{}, error) {
 	// slices -- specifically slices of structs. */
 
 	if t.Kind() != reflect.Slice {
-		return x, fmt.Errorf("Marshal requires a slice of structs.")
+		return x, fmt.Errorf("Marshal() requires a slice of structs")
 	}
 
 	cols, err := rows.Columns()
