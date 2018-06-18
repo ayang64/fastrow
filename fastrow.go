@@ -6,6 +6,10 @@ import (
 	"reflect"
 )
 
+func Ping() string {
+	return "pong"
+}
+
 // Marshal expects a slice of structs.
 func Marshal(x interface{}, rows *sql.Rows) (interface{}, error) {
 	// extract type information stored in x interface
