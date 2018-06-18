@@ -24,19 +24,16 @@ func Marshal(x interface{}, rows *sql.Rows) (interface{}, error) {
 		return x, err
 	}
 
-	// retrieve the type that TypeOf(x) points to.  So if reflect.TypeOf(x) is
-	// s slice, then reflect.TypeOf(x).Elem() will give us what x is a slice
-	// of.
-	te := t.Elem()
-
-	// get the value of x.  we'll be appending to this
-	v := reflect.ValueOf(x)
-
 	// store column indices for easy retrieval.
 	colmap := make(map[string]int)
 	for idx, col := range cols {
 		colmap[col] = idx
 	}
+
+	// retrieve the type that TypeOf(x) points to.  So if reflect.TypeOf(x) is
+	// s slice, then reflect.TypeOf(x).Elem() will give us what x is a slice
+	// of.
+	te := t.Elem()
 
 	// store field indices in the order that they're needed for retrieval.
 	var fields []int
@@ -54,6 +51,9 @@ func Marshal(x interface{}, rows *sql.Rows) (interface{}, error) {
 	for idx, field := range fields {
 		destslice[idx] = nv.Elem().Field(field).Addr().Interface()
 	}
+
+	// get the value of x.  we'll be appending to this
+	v := reflect.ValueOf(x)
 
 	for rows.Next() {
 		// rows.Scan() takes a variable number of interface{} values that contain
