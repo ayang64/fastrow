@@ -106,7 +106,7 @@ func Marshal(w interface{}, rows *sql.Rows) error {
 	// that value to our destslice.  This effectively packs
 	for idx, col := range cols {
 		// The long form of this might be something like:
-
+		//
 		// e := nv.Elem() // since nv i sa pointer to our struct, we have to use Elem() to retrieve an element of that type.
 		//
 		// f := e.Field(field[col]) // this retrieves the index for the field of the column that has the apropriate field tag for the column name.
@@ -136,20 +136,12 @@ func Marshal(w interface{}, rows *sql.Rows) error {
 			return err
 		}
 
-		// Append struct data to our resulting slice.
+		// Append struct data to our resulting slice.  Since x is a reflect.Value,
+		// this is equivalent to:
+		//
+		//   x = append(x, ...)
 		x.Set(reflect.Append(x, nv.Elem()))
 	}
 
-	log.Printf("x.Len() = %d", x.Len())
-	log.Printf("x.CanAddr() = %v", x.CanAddr())
-	log.Printf("x.CanSet() = %v", x.CanSet())
-	log.Printf("deref.CanSet() = %v", deref.CanSet())
-	log.Printf("deref.CanAddr() = %v", deref.CanAddr())
-	log.Printf("x.UnsafeAddr() = %v", x.UnsafeAddr())
-
-	// Return the an interface value for our resulting slice.  The caller will
-	// have to type assert it.
-	///	deref.SetPointer(unsafe.Pointer(x.UnsafeAddr()))
-	// deref.Set(x.Addr())
 	return nil
 }
