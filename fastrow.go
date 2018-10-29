@@ -3,7 +3,6 @@ package fastrow
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"reflect"
 )
 
@@ -29,16 +28,11 @@ func Marshal(w interface{}, rows *sql.Rows) error {
 		return fmt.Errorf("Marshal() requires a pointer to a slice of structs")
 	}
 
-	log.Printf("deref.Kind() = %v", deref.Kind())
-
 	x := deref.Elem()
-	log.Printf("x.Kind() = %v", x.Kind())
 
 	// extract type information stored in x interface
 	// t := reflect.TypeOf(x)
 	t := x.Type()
-
-	log.Printf("t.Kind() = %v", t.Kind())
 
 	// determine exactly the kind of symbol t is.  right now we only handle
 	// slices -- specifically slices of structs.
